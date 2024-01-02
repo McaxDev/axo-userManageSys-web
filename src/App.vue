@@ -12,7 +12,7 @@
           <el-dialog
             :title="islog===true? '登录':'注册'"
             :visible.sync="logres"
-            custom-class="rounded-3"
+            custom-class="rounded-3 modal-width"
             >
 
             <div>
@@ -55,7 +55,7 @@
     </div>
     <div class="view">
       <div style="border-right: 1px solid #e6e6e6;">
-        <el-menu default-active="/" class="el-menu text-start" @open="handleOpen" @close="handleClose" :collapse="isCollapse" :router="true" style="height: 100vh;border: none;">
+        <el-menu default-active="/" class="el-menu text-start" :collapse="isCollapse" :router="true" style="height: calc(100vh - 56px);border: none;">
           
           <el-submenu index="1">
             <template slot="title">
@@ -63,16 +63,21 @@
               <span slot="title">主页</span>
             </template>
             <el-menu-item index="/">首页</el-menu-item>
-            <el-menu-item index="/1">A</el-menu-item>
+            <el-menu-item index="/notice">公告板</el-menu-item>
+            <el-menu-item index="/msgboard">留言板</el-menu-item>
+            <el-menu-item index="/chat">聊天互动</el-menu-item>
+            <el-menu-item index="/transnav">中转导航</el-menu-item>
+            <el-menu-item index="/seedmap">种子地图</el-menu-item>
+            <el-menu-item index="/gamemap">游戏地图</el-menu-item>
           </el-submenu>
 
           <el-submenu index="2">
             <template slot="title">
               <i class="el-icon-user-solid"></i>
-              <span slot="title">我的账号</span>
+              <span slot="title">我的信息</span>
             </template>
-            <el-menu-item index="/">账号信息</el-menu-item>
-            <el-menu-item index="/1">游戏数据</el-menu-item>
+            <el-menu-item index="/userData">账号信息</el-menu-item>
+            <el-menu-item index="/gameData">游戏数据</el-menu-item>
           </el-submenu>
 
           <el-submenu index="3" v-if="!isAdmin">
@@ -80,8 +85,8 @@
               <i class="el-icon-s-tools"></i>
               <span slot="title">工作台</span>
             </template>
-            <el-menu-item index="/">账号管理</el-menu-item>
-            <el-menu-item index="/1">XXX</el-menu-item>
+            <el-menu-item index="/userManage">账号管理</el-menu-item>
+            <el-menu-item index="/xxx">XXX</el-menu-item>
           </el-submenu>
 
         </el-menu>
@@ -120,12 +125,6 @@
       window.addEventListener('resize', this.screenChange)
     },
     methods: {
-      handleOpen(key, keyPath) {
-        console.log(key, keyPath);
-      },
-      handleClose(key, keyPath) {
-        console.log(key, keyPath);
-      },
       screenChange(){
         if(window.innerWidth<=560){
           this.isCollapse=true
@@ -153,5 +152,9 @@
 
 .el-menu:not(.el-menu--collapse) {
   width: 200px;
+}
+
+.modal-width{
+  min-width: 300px;
 }
 </style>
