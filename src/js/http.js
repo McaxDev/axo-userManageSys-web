@@ -1,4 +1,5 @@
 import axios from 'axios'
+import cookie from 'js-cookie'
 
 const http = axios.create({
   baseURL: 'https://mcax.cn:10808',
@@ -10,6 +11,10 @@ const http = axios.create({
 })
 
 http.interceptors.request.use(config => {
+  const token = cookie.get('axotoken')
+  if (token) {
+    config.headers['Axotoken'] = token // 将 Token 添加到请求头
+  }
   return config
 }, error => {
   return Promise.reject(error)

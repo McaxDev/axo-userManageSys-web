@@ -70,7 +70,7 @@
     </div>
     <div class="view">
       <div style="border-right: 1px solid #e6e6e6;">
-        <el-menu default-active="/" class="el-menu text-start" :collapse="isCollapse" :router="true" style="height: calc(100vh - 56px);border: none;">
+        <el-menu default-active="/" class="el-menu text-start" :collapse="isCollapse" :router="true" style="min-height: calc(100vh - 56px);border: none;">
           
           <el-submenu index="1">
             <template slot="title">
@@ -95,7 +95,7 @@
             <el-menu-item index="/gameData">游戏数据</el-menu-item>
           </el-submenu>
 
-          <el-submenu index="3" v-if="!isAdmin">
+          <el-submenu index="3" v-if="isAdmin===1">
             <template slot="title">
               <i class="el-icon-s-tools"></i>
               <span slot="title">工作台</span>
@@ -116,6 +116,7 @@
 <script>
   import http from './js/http'
   import pasenc from './js/pasenc'
+  import cookie from 'js-cookie'
   export default {
     data() {
       return {
@@ -154,7 +155,7 @@
         this.$refs[valueform].validate((valid) => {
           if (valid) {
             if(this.islog){//登录
-              console.log('登录',this.valueform,pasenc(this.valueform.pas))
+              console.log('登录',this.valueform.name)
               const userinfo={
                 userPas:pasenc(this.valueform.pas),
                 userName:this.valueform.name,
@@ -163,10 +164,16 @@
                 .then(res => {
                   this.$store.commit('setLoginStatus', true)
                   this.$store.commit('setUserName', this.valueform.name)
-                  console.log(res)
+                  this.$store.commit('setAdminStatus', res.data.data.admin)
+                  // console.log(res.headers.axotoken)
+                  cookie.set('axotoken',res.headers.axotoken)
+                  this.$message({
+                    message: res.data.msg,
+                    type: 'success'
+                  })
                 })
                 .catch(err => {
-                  console.error(err)
+                  // console.error(err)
                 })
             }else{//注册
               const userinfo={
@@ -197,6 +204,8 @@
       logout(){
         this.$store.commit('setLoginStatus', false)
         this.$store.commit('setUserName', '')
+        this.$store.commit('setAdminStatus', 0)
+        cookie.remove('axotoken')
         this.$message({
           message: `登出成功`,
           type: 'warning'
