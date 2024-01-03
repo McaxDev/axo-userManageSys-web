@@ -20,22 +20,22 @@
 
                 <div v-if="islog">
                   <el-form-item label="用户名" prop="name">
-                  <el-input v-model="valueform.name"></el-input>
+                    <el-input class="rounded-3" v-model="valueform.name"></el-input>
                   </el-form-item>
                   <el-form-item label="密码" prop="pas">
-                    <el-input type="password" v-model="valueform.pas"></el-input>
+                    <el-input class="rounded-3" v-model="valueform.pas" show-password></el-input>
                   </el-form-item>
                 </div>
 
                 <div v-else>
                   <el-form-item label="用户名" prop="name">
-                  <el-input v-model="valueform.name"></el-input>
+                    <el-input class="rounded-3" v-model="valueform.name"></el-input>
                   </el-form-item>
-                  <el-form-item label="游戏内名称" prop="id">
-                    <el-input v-model="valueform.id"></el-input>
+                  <el-form-item label="游戏内名称" prop="gameName">
+                    <el-input class="rounded-3" v-model="valueform.gameName"></el-input>
                   </el-form-item>
                   <el-form-item label="密码" prop="pas">
-                    <el-input type="password" v-model="valueform.pas"></el-input>
+                    <el-input class="rounded-3" v-model="valueform.pas" show-password></el-input>
                   </el-form-item>
                 </div>
                 <el-button type="text" @click="islog=!islog">{{islog===true? '还没账号？点我注册':'前往登录'}}</el-button>
@@ -44,11 +44,26 @@
 
             <span slot="footer" class="text-end">
               <el-button class="rounded-3" @click="logres = false">取 消</el-button>
-              <el-button class="rounded-3" type="primary" @click="logres = false">确 定</el-button>
+              <el-button class="rounded-3" type="primary" @click="submit('valueform')">确 定</el-button>
             </span>
           </el-dialog>
         </div>
-        
+        <div v-else>
+          <el-dropdown trigger="click">
+            <span class="el-dropdown-link">
+              <el-button type="text" @click="">{{userName}}</el-button>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item>
+                <el-button type="text" @click="$router.currentRoute.path !== '/userData'?$router.push('userData'):false">账号信息</el-button>
+              </el-dropdown-item>
+              <el-dropdown-item>
+                <el-button type="text" @click="logout">登出</el-button>
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+          
+        </div>
 
       </div>
 
@@ -99,6 +114,8 @@
 </template>
 
 <script>
+  import http from './js/http'
+  import pasenc from './js/pasenc'
   export default {
     data() {
       return {
@@ -110,7 +127,7 @@
           name:[
             { required: true, message: '请输入用户名', trigger: 'blur' },
           ],
-          id:[
+          gameName:[
             { required: true, message: '请输入游戏内名称', trigger: 'blur' },
           ],
           pas:[
@@ -123,6 +140,7 @@
     mounted(){
       this.screenChange()
       window.addEventListener('resize', this.screenChange)
+      // this.$router.push('/')
     },
     methods: {
       screenChange(){
@@ -131,14 +149,70 @@
         }else{
           this.isCollapse=false
         }
+      },
+      submit(valueform){
+        this.$refs[valueform].validate((valid) => {
+          if (valid) {
+            if(this.islog){//登录
+              console.log('登录',this.valueform,pasenc(this.valueform.pas))
+              const userinfo={
+                userPas:pasenc(this.valueform.pas),
+                userName:this.valueform.name,
+              }
+              http.post('/login',userinfo)
+                .then(res => {
+                  this.$store.commit('setLoginStatus', true)
+                  this.$store.commit('setUserName', this.valueform.name)
+                  console.log(res)
+                })
+                .catch(err => {
+                  console.error(err)
+                })
+            }else{//注册
+              const userinfo={
+                userPas:pasenc(this.valueform.pas),
+                userName:this.valueform.name,
+                gameName:this.valueform.gameName,
+              }
+              http.post('/regin',userinfo)
+              .then(res=>{
+                this.$message({
+                  message: res,
+                  type: 'success'
+                })
+              })
+              .catch(err=>{
+                this.$message.error(err)
+              })
+              console.log('注册',this.valueform.name)
+            }
+            this.logres=false
+          } else {
+            this.$message.error('请填写完整登陆信息')
+            return false
+          }
+        })
+      },
+
+      logout(){
+        this.$store.commit('setLoginStatus', false)
+        this.$store.commit('setUserName', '')
+        this.$message({
+          message: `登出成功`,
+          type: 'warning'
+        })
       }
+
     },
     computed:{
       isLoggedIn() {
-        return this.$store.state.isLoggedIn;
+        return this.$store.state.isLoggedIn
       },
       isAdmin() {
-        return this.$store.state.isAdmin;
+        return this.$store.state.isAdmin
+      },
+      userName() {
+        return this.$store.state.userName
       }
     }
   }

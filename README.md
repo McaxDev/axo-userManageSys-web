@@ -6,3 +6,4 @@
 - axios 
 - js-cookie 
 - echarts
+- crypto-js
