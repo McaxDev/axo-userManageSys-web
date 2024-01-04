@@ -1,5 +1,6 @@
 import axios from 'axios'
 import cookie from 'js-cookie'
+import store from '../store/index'
 
 const http = axios.create({
   baseURL: 'https://mcax.cn:10808',
@@ -30,6 +31,10 @@ http.interceptors.response.use(response => {
             break
             case 401:
               window.$message.error('无法验证的用户，请登录后再试！')
+              store.commit('setLoginStatus', false)
+              store.commit('setUserName', '')
+              store.commit('setAdminStatus', 0)
+              cookie.remove('axotoken')
             break
             case 403:
               window.$message.error('禁止访问!')
