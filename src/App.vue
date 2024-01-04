@@ -107,7 +107,7 @@
         </el-menu>
 
       </div>
-      <router-view class="m-3"/>
+      <router-view class="m-3" style="flex: 1;"/>
     </div>
     
   </div>
@@ -142,8 +142,18 @@
       this.screenChange()
       window.addEventListener('resize', this.screenChange)
       // this.$router.push('/')
+      this.logTest()
     },
     methods: {
+      logTest(){
+        if(!cookie.get('axotoken')||!this.isLoggedIn){
+          this.$store.commit('setLoginStatus', false)
+          this.$store.commit('setUserName', '')
+          this.$store.commit('setAdminStatus', 0)
+          cookie.remove('axotoken')
+          this.$message('已退出登录状态或未登录')
+        }
+      },
       screenChange(){
         if(window.innerWidth<=560){
           this.isCollapse=true
@@ -184,7 +194,7 @@
               http.post('/regin',userinfo)
               .then(res=>{
                 this.$message({
-                  message: res,
+                  message: res.data.msg,
                   type: 'success'
                 })
               })
@@ -207,7 +217,7 @@
         this.$store.commit('setAdminStatus', 0)
         cookie.remove('axotoken')
         this.$message({
-          message: `登出成功`,
+          message: `登出账号`,
           type: 'warning'
         })
       }
@@ -223,6 +233,9 @@
       userName() {
         return this.$store.state.userName
       }
+    },
+    watch:{
+
     }
   }
 </script>
