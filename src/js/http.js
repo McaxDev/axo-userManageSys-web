@@ -1,5 +1,6 @@
 import axios from 'axios'
 import cookie from 'js-cookie'
+import store from '../store/index'
 
 const http = axios.create({
   baseURL: 'https://mcax.cn:10808',
@@ -26,25 +27,32 @@ http.interceptors.response.use(response => {
     if (error.response) {
         switch (error.response.status) {
             case 400:
-                this.$message.error('请求错误')
+              window.$message.error('请求错误!')
             break
             case 401:
-                this.$message.error('用户验证错误')
+              window.$message.error('无法验证的用户，请登录后再试！')
+              store.commit('setLoginStatus', false)
+              store.commit('setUserName', '')
+              store.commit('setAdminStatus', 0)
+              cookie.remove('axotoken')
             break
             case 403:
-                this.$message.error('禁止访问')
+              window.$message.error('禁止访问!')
             break
             case 404:
-                this.$message.error('未找到')
+              window.$message.error('404未找到!')
             break
             case 500:
-                this.$message.error('服务器内部错误')
+              window.$message.error('服务器内部错误!')
+            break
+            case 502:
+              window.$message.error('网络错误，请检查网络连接!')
             break
             default:
-                this.$message.error('发生了一些错误')
+              window.$message.error('发生了一些错误!')
         }
     }
-  return Promise.reject(error)
+  // return Promise.reject(error)
 });
 
 export default http

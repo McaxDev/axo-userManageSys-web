@@ -1,9 +1,37 @@
 <template>
-    <div>游戏地图</div>
+    <div>
+        <div class="w-100 h-100" style="position: relative;">
+            <iframe class="w-100 h-100" src="https://be.mcax.cn/pages/home" ref="mapIframe"></iframe>
+            <div class="ms-2 mb-2 pe-md-0 pb-1 pb-md-0" style="position: absolute;bottom: 0px;left: 0px;">
+                <el-radio-group v-model="mapValue" size="small" @input="changeMap">
+                    <el-radio-button border label="互通"></el-radio-button>
+                    <el-radio-button border label="生电"></el-radio-button>
+                </el-radio-group>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
-
+export default({
+    data(){
+        return{
+            mapValue:'互通'
+        }
+    },
+    methods:{
+        changeMap(){
+            switch(this.mapValue){
+                case('互通'):
+                    this.$refs.mapIframe.src='https://be.mcax.cn/pages/home'
+                break
+                case('生电'):
+                    this.$refs.mapIframe.src='https://scmap.mcax.cn/'
+                break
+            }
+        }
+    }
+})
 </script>
 
 <style>
