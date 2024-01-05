@@ -7,3 +7,4 @@
 - js-cookie 
 - echarts
 - crypto-js
+- uuid

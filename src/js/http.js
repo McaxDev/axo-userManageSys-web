@@ -3,7 +3,8 @@ import cookie from 'js-cookie'
 import store from '../store/index'
 
 const http = axios.create({
-  baseURL: 'https://mcax.cn:10808',
+  // baseURL: 'https://mcax.cn:10808',
+  baseURL: 'https://localhost:10808',
   timeout: 50000,
   headers: {
     'Content-Type': 'application/json',

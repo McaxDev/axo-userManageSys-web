@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="notice">
         <div class="d-flex justify-content-between align-items-cener">
             <div class="d-flex align-items-center">
                 <div>{{ !userName? '您还未登录':`欢迎！${userName}` }}</div>
@@ -22,7 +22,21 @@
                                 {{ card.date }}
                             </small>
                         </div>
-                        <div><p>{{ card.content }}</p></div>
+                        <div>
+                            <p>{{ card.content }}</p>
+                            <div>
+                                <div class="row g-3">
+                                    <div class="col-md-6 col-4 text-center" v-for="img in card.imgs" :key="img.id" style="width: 25vw;height: 25vw;max-width: 160px;max-height: 160px;min-width: 100px;min-height: 100px;">
+                                        <div class="w-100 h-100 text-center overflow-hidden rounded-3" style="box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)">
+                                            <el-image class="w-100 h-100" :fit="`cover`" :src="`${baseURL}/imgs/${img}`" :preview-src-list="card.imgs.map(imgItem => `${baseURL}/imgs/${imgItem}`)"></el-image>
+                                            <!-- <img class="img-fluid" :src="`${baseURL}/imgs/${img}`"> -->
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
                     </el-card>
                 </div>
             </div>
@@ -30,7 +44,20 @@
 
         <el-drawer custom-class="drawer" title="发布公告" :visible.sync="editBox" size="50%">
             <div style="padding: 20px;">
-                <el-input type="textarea" :autosize="{ minRows: 20, maxRows: 100}" maxlength="400" placeholder="在此编辑公告" v-model="noticeText"></el-input>
+                <el-input type="text" placeholder="在此编辑标题" v-model="noticeTitle" maxlength="15" show-word-limit />
+                <el-input class="mt-2" type="textarea" :autosize="{ minRows: 20, maxRows: 100}" maxlength="400" placeholder="在此编辑公告" v-model="noticeText"></el-input>
+                <el-upload class="mt-2" action="" :http-request="upLoadNotice" :file-list="IMGlist" :on-change="changeIMG" :on-remove="removeIMG" list-type="picture-card" :auto-upload="false" multiple ref="noticeImgUpload">
+                    <i slot="default" class="el-icon-plus"></i>
+                    <div slot="file" slot-scope="{file}">
+                        <img class="el-upload-list__item-thumbnail" :src="file.url" :alt="file.name">
+                        <span class="el-upload-list__item-actions">
+                            <span class="el-upload-list__item-delete" @click="removeIMG(file)">
+                                <i class="el-icon-delete"></i>
+                            </span>
+                        </span>
+                    </div>
+                </el-upload>
+                <el-button type="primary" plain class="rounded-3 mt-2 w-100" @click="upLoadNotice">发布</el-button>
             </div>
         </el-drawer>
 
@@ -38,14 +65,74 @@
 </template>
 
 <script>
+import http from '../../js/http'
+import { v4 as uuidv4 } from 'uuid'
 export default({
     data(){
         return{
             editBox:false,
             noticeText:'',
-            cards:[
-                {name:'title',author:'author-name',date:'2024/01/01',content:'除了新的输入框类型，HTML5标准中还给现有的表单控件做了一些小改进，其中一个改进就是允许给输入框设置占位文本。占位文本会在输入框为空或者失去焦点的时候显示出来，一旦用户点击输入框（或者利用Tab键使其获得焦点），占位文本就会消失。检测浏览器是否支持占位文本可以使用检测方法2.如果浏览器支持占位文本的话，创建的<imput>元素对应的DOM对象会有一个placeholder的属性（即使没有在<imput>元素上显示地设置placeholder属性）'},
-            ]
+            noticeTitle:'',
+            IMGlist:[],
+            cards:[]
+        }
+    },
+    mounted(){
+        this.getNotice()
+    },
+    methods:{
+        removeIMG(fileToRemove){
+            this.IMGlist = this.IMGlist.filter(file => file.uid !== fileToRemove.uid)
+        },
+        getNotice(){
+            this.cards=[]
+            http.post('/getNotice')
+            .then(res=>{
+                res.data.data.forEach((item)=>{
+                    this.cards.push({id:item.id,name:item.title,author:item.author,date:item.date,content:item.content,imgs:JSON.parse(item.imgs)})
+                })
+                // console.log(this.cards)
+                
+            })
+            .catch(err=>{
+                this.$message.error(err)
+            })
+        },
+        upLoadNotice(){
+            let formData = new FormData()//图片文件数组
+            this.IMGlist.forEach((fileItem) => {
+                // console.log(fileItem)
+                if (fileItem.raw) {
+                    formData.append('file', fileItem.raw, fileItem.uid + fileItem.name)
+                }
+            })
+            formData.append('noticeId', uuidv4())
+            formData.append('msg', this.noticeText)
+            formData.append('title', this.noticeTitle)
+            formData.append('author', this.$store.state.userName)
+            http.post('/upLoadNotice',formData,{
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            .then(res=>{
+                console.log(res)
+                this.$message({
+                    message: res.data.msg,
+                    type: 'success'
+                })
+                this.editBox=false
+                this.noticeText=this.noticeTitle=''
+                this.$refs.noticeImgUpload.clearFiles()
+                this.getNotice()
+            })
+            .catch(err=>{
+                this.$message.error(err)
+            })
+        },
+        changeIMG(file,fileList){
+            this.IMGlist=fileList
+            console.log(file,fileList)
         }
     },
     computed:{
@@ -54,13 +141,23 @@ export default({
       },
       isAdmin() {
         return this.$store.state.isAdmin
+      },
+      baseURL(){
+        return http.defaults.baseURL
       }
     },
 })
 </script>
 
 <style>
-.drawer{
-    min-width: 340px;
+
+.notice{
+    .drawer{
+        min-width: 360px;
+    }
+    .el-card__body{
+        overflow: auto;
+        padding-bottom: 80px;
+    }
 }
 </style>

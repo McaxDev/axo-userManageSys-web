@@ -179,7 +179,7 @@
                   cookie.set('axotoken',res.headers.axotoken)
                   this.$message({
                     message: res.data.msg,
-                    type: 'success'
+                    type: res.data.msg==='用户名或密码错误'?'error':'success'
                   })
                 })
                 .catch(err => {
