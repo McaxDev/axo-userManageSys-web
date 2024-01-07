@@ -178,6 +178,7 @@
               }
               http.post('/login',userinfo)
                 .then(res => {
+                  console.log(res)
                   this.$store.commit('setLoginStatus', true)
                   this.$store.commit('setUserName', this.valueform.name)
                   this.$store.commit('setUserId', res.data.data.id)

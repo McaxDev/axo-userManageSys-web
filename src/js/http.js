@@ -3,7 +3,7 @@ import cookie from 'js-cookie'
 import store from '../store/index'
 
 const http = axios.create({
-  // baseURL: 'https://mcax.cn:10808',
+  // baseURL: 'https://api.mcax.cn/sys',
   baseURL: 'https://localhost:10808',
   timeout: 50000,
   headers: {
@@ -53,7 +53,7 @@ http.interceptors.response.use(response => {
               window.$message.error('发生了一些错误!')
         }
     }
-  // return Promise.reject(error)
+  return Promise.reject(error)
 });
 
 export default http
