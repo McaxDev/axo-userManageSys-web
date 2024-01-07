@@ -54,6 +54,11 @@ const routes = [
     name: 'userManage',
     component: () => import('../views/workbenches/userManage.vue')
   },
+  {
+    path: '/about',
+    name: 'about',
+    component: () => import('../views/about.vue')
+  },
 ]
 
 const router = new VueRouter({

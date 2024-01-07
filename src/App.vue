@@ -104,6 +104,11 @@
             <el-menu-item index="/xxx">XXX</el-menu-item>
           </el-submenu>
 
+          <el-menu-item index="/about">
+            <i class="el-icon-menu"></i>
+            <span slot="title">关于本站</span>
+          </el-menu-item>
+
         </el-menu>
 
       </div>
@@ -150,6 +155,7 @@
           this.$store.commit('setLoginStatus', false)
           this.$store.commit('setUserName', '')
           this.$store.commit('setAdminStatus', 0)
+          this.$store.commit('setUserId', null)
           cookie.remove('axotoken')
           this.$message('已退出登录状态或未登录')
         }
@@ -174,6 +180,7 @@
                 .then(res => {
                   this.$store.commit('setLoginStatus', true)
                   this.$store.commit('setUserName', this.valueform.name)
+                  this.$store.commit('setUserId', res.data.data.id)
                   this.$store.commit('setAdminStatus', res.data.data.admin)
                   // console.log(res.headers.axotoken)
                   cookie.set('axotoken',res.headers.axotoken)
@@ -215,6 +222,7 @@
         this.$store.commit('setLoginStatus', false)
         this.$store.commit('setUserName', '')
         this.$store.commit('setAdminStatus', 0)
+        this.$store.commit('setUserId', null)
         cookie.remove('axotoken')
         this.$message({
           message: `登出账号`,

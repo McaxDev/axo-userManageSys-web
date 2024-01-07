@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     isLoggedIn:false,
     isAdmin:false,
-    userName:''
+    userName:'',
+    userId:null,
   },
   getters: {
   },
@@ -20,6 +21,9 @@ export default new Vuex.Store({
     },
     setAdminStatus(state, status) {
       state.isAdmin = status
+    },
+    setUserId(state, status){
+      state.userId = status
     }
   },
   actions: {
