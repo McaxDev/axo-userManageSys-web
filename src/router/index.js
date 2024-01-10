@@ -55,6 +55,11 @@ const routes = [
     component: () => import('../views/workbenches/userManage.vue')
   },
   {
+    path: '/handleLogs',
+    name: 'handleLogs',
+    component: () => import('../views/workbenches/handleLogs.vue')
+  },
+  {
     path: '/about',
     name: 'about',
     component: () => import('../views/about.vue')
