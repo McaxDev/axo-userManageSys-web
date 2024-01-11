@@ -5,7 +5,7 @@
             <el-table-column prop="userName" label="用户名">
                 <template slot-scope="scope">
                     <div v-if="editIndex===scope.$index">
-                        <el-input class="rounded-3" size="medium" v-model="scope.row.userName" placeholder="请输入内容"></el-input>
+                        <el-input class="rounded-3" size="small" v-model="scope.row.userName" placeholder="请输入内容"></el-input>
                     </div>
                     <div v-else>{{ scope.row.userName }}</div>
                 </template>
@@ -13,7 +13,7 @@
             <el-table-column prop="gameName" label="游戏名">
                 <template slot-scope="scope">
                     <div v-if="editIndex===scope.$index">
-                        <el-input class="rounded-3" size="medium" v-model="scope.row.gameName" placeholder="请输入内容"></el-input>
+                        <el-input class="rounded-3" size="small" v-model="scope.row.gameName" placeholder="请输入内容"></el-input>
                     </div>
                     <div v-else>{{ scope.row.gameName }}</div>
                 </template>
@@ -29,18 +29,18 @@
                         *点击编辑修改密码
                     </div>
                     <div v-else>
-                        <el-input class="rounded-3" size="medium" v-model="password" placeholder="请输入新的密码"></el-input>
+                        <el-input class="rounded-3" size="small" v-model="password" placeholder="请输入新的密码"></el-input>
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column label="操作">
+            <el-table-column label="操作" width="170px">
                 <template slot-scope="scope">
                     <div v-if="editIndex!==scope.$index">
-                        <el-button class="rounded-3" size="medium" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                        <el-button class="rounded-3" size="medium" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                        <el-button class="rounded-3" size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                        <el-button class="rounded-3" size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
                     </div>
                     <div v-else>
-                        <el-button class="rounded-3" size="medium" @click="confEdit(scope.$index, scope.row)">确认</el-button>
+                        <el-button class="rounded-3" size="small" @click="confEdit(scope.$index, scope.row)">确认</el-button>
                     </div>
                 </template>
             </el-table-column>

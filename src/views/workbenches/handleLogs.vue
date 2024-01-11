@@ -1,6 +1,12 @@
 <template>
     <div class="handleLogs">
-        <div>操作日志</div>
+      <el-table :data="tableData" border v-loading="loading" style="width: 100%">
+        <el-table-column prop="userName" label="用户名"></el-table-column>
+        <el-table-column prop="gameName" label="游戏名"></el-table-column>
+        <el-table-column prop="handle" label="操作"></el-table-column>
+        <el-table-column prop="state" label="状态"></el-table-column>
+        <el-table-column prop="date" label="时间"></el-table-column>
+      </el-table>
     </div>
 </template>
 
@@ -10,7 +16,8 @@ import pasenc from '../../js/pasenc'
 export default({
     data(){
         return{
-            
+          loading:false,
+          tableData:[]
         }
     },
     mounted(){
