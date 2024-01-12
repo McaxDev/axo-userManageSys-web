@@ -156,6 +156,7 @@
           this.$store.commit('setUserName', '')
           this.$store.commit('setAdminStatus', 0)
           this.$store.commit('setUserId', null)
+          this.$store.commit('setGameName', null)
           cookie.remove('axotoken')
           this.$message('已退出登录状态或未登录')
         }
@@ -179,19 +180,19 @@
               http.post('/login',userinfo)
                 .then(res => {
                   console.log(res)
-                  this.$store.commit('setLoginStatus', true)
-                  this.$store.commit('setUserName', this.valueform.name)
-                  this.$store.commit('setUserId', res.data.data.id)
-                  this.$store.commit('setAdminStatus', res.data.data.admin)
-                  // console.log(res.headers.axotoken)
-                  cookie.set('axotoken',res.headers.axotoken)
+                  if(res.data.msg!=='用户名或密码错误'){
+                    this.$store.commit('setLoginStatus', true)
+                    this.$store.commit('setUserName', this.valueform.name)
+                    this.$store.commit('setUserId', res.data.data.id)
+                    this.$store.commit('setAdminStatus', res.data.data.admin)
+                    this.$store.commit('setGameName', res.data.data.gameName)
+                    // console.log(res.headers.axotoken)
+                    cookie.set('axotoken',res.headers.axotoken)
+                  }
                   this.$message({
                     message: res.data.msg,
                     type: res.data.msg==='用户名或密码错误'?'error':'success'
                   })
-                })
-                .catch(err => {
-                  // console.error(err)
                 })
             }else{//注册
               const userinfo={

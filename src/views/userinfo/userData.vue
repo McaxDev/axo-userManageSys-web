@@ -82,7 +82,7 @@
                 .then(res=>{
                     // console.log(res.data.data)
                     this.valueform.name=res.data.data.userName
-                    this.valueform.gameName=res.data.data.userName
+                    this.valueform.gameName=res.data.data.gameName
                     this.imgUrl=JSON.parse(res.data.data.head)===null||JSON.parse(res.data.data.head)[0]===undefined?'':`${http.defaults.baseURL}/imgs/${JSON.parse(res.data.data.head)[0]}`
                     // this.$message({
                     //     message: res.data.msg,

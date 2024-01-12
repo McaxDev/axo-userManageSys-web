@@ -84,11 +84,40 @@ export default({
             this.editIndex=index
         },
         handleDelete(index,row){
-            console.log(index,row.id)
+            // console.log(index,row.id)
+            const query={
+                id:row.id
+            }
+            http.post('/delUserAdmin',query)
+            .then(res=>{
+                // console.log(res)
+                this.tableData.splice(index,1)
+                this.$message({
+                    message: res.data.msg,
+                    type: 'success'
+                })
+            })
         },
         confEdit(index,row){
+            const query={
+                id:row.id,
+                userName:row.userName,
+                gameName:row.gameName,
+                admin:row.admin,
+                password:this.password.length>0?pasenc(this.password):null
+            }
+            http.post('/editUserInfoAdmin',query)
+            .then(res=>{
+                // console.log(res)
+                this.$message({
+                    message: '修改成功',
+                    type: 'success'
+                })
+            })
+            // console.log(query)
+            this.password=''
             this.editIndex=null
-            console.log(row.id,row.userName,row.gameName,row.admin,pasenc(this.password))
+            
         }
     },
     computed:{

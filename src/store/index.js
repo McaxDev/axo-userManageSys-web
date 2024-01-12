@@ -9,6 +9,7 @@ export default new Vuex.Store({
     isAdmin:false,
     userName:'',
     userId:null,
+    gameName:''
   },
   getters: {
   },
@@ -24,6 +25,9 @@ export default new Vuex.Store({
     },
     setUserId(state, status){
       state.userId = status
+    },
+    setGameName(state, status){
+      state.gameName = status
     }
   },
   actions: {
