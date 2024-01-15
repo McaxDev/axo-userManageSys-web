@@ -53,7 +53,7 @@
     mounted(){
       this.getOnlineInfo()
       this.getOnlineTime().then(() => {
-        console.log(this.infoList)
+        // console.log(this.infoList)
         this.onlineTime()
         this.mineList()
         this.killList()
@@ -338,7 +338,7 @@
         }))
         data.sort((a, b) => b.mines - a.mines)
         data=data.slice(0,10)
-        console.log(data)
+        // console.log(data)
         var option = {
           grid:{
             left:122,
@@ -408,7 +408,7 @@
         }))
         data.sort((a, b) => b.kills - a.kills)
         data=data.slice(0,10)
-        console.log(data)
+        // console.log(data)
         var option = {
           grid:{
             left:122,
@@ -478,7 +478,7 @@
         }))
         data.sort((a, b) => b.death - a.death)
         data=data.slice(0,10)
-        console.log(data)
+        // console.log(data)
         var option = {
           grid:{
             left:122,
@@ -548,7 +548,7 @@
         }))
         data.sort((a, b) => b.lengths - a.lengths)
         data=data.slice(0,10)
-        console.log(data)
+        // console.log(data)
         var option = {
           grid:{
             left:122,

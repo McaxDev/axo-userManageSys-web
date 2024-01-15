@@ -17,7 +17,7 @@
                         <div slot="header" class="m-0 p-0 d-flex justify-content-between align-items-center">
                             <div class="d-inline-block text-truncate">{{ card.name }}</div>
                             <small class="ms-auto d-flex align-items-center" style="font-size: 70%;">
-                                <el-avatar class="me-1" size="small" :src="card.head"></el-avatar>
+                                <el-avatar class="me-1" size="small" :src="card.head" :size="40"></el-avatar>
                                 <span class="d-inline-block text-truncate me-1" style="max-width: 100px;">{{ card.author }}</span>
                                 {{ card.date }}
                                 <el-button v-if="isAdmin" type="text" icon="el-icon-close" @click="delNotice(card.id)"></el-button>
