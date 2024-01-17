@@ -60,6 +60,11 @@ const routes = [
     component: () => import('../views/workbenches/handleLogs.vue')
   },
   {
+    path: '/quickCommand',
+    name: 'quickCommand',
+    component: () => import('../views/workbenches/quickCommand.vue')
+  },
+  {
     path: '/about',
     name: 'about',
     component: () => import('../views/about.vue')
@@ -67,6 +72,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  mode:"hash",
   routes
 })
 

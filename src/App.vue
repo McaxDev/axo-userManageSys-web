@@ -101,6 +101,7 @@
               <span slot="title">工作台</span>
             </template>
             <el-menu-item index="/userManage">账号管理</el-menu-item>
+            <el-menu-item index="/quickCommand">快捷指令</el-menu-item>
             <el-menu-item index="/handleLogs">操作日志</el-menu-item>
           </el-submenu>
 
