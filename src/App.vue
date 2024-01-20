@@ -80,7 +80,7 @@
             <el-menu-item index="/">首页</el-menu-item>
             <el-menu-item index="/notice">公告板</el-menu-item>
             <el-menu-item index="/msgboard">留言板</el-menu-item>
-            <el-menu-item index="/chat">聊天互动</el-menu-item>
+            <!-- <el-menu-item index="/chat">聊天互动</el-menu-item> -->
             <el-menu-item index="/transnav">中转导航</el-menu-item>
             <el-menu-item index="/seedmap">种子地图</el-menu-item>
             <el-menu-item index="/gamemap">游戏地图</el-menu-item>
@@ -102,7 +102,7 @@
             </template>
             <el-menu-item index="/userManage">账号管理</el-menu-item>
             <el-menu-item index="/quickCommand">快捷指令</el-menu-item>
-            <el-menu-item index="/handleLogs">操作日志</el-menu-item>
+            <!-- <el-menu-item index="/handleLogs">操作日志</el-menu-item> -->
           </el-submenu>
 
           <el-menu-item index="/about">

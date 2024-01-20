@@ -47,7 +47,17 @@
 					tela:{
 						main:[]
 					}
-				}
+				},
+        echartsColor:{
+          sc: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+            { offset: 0, color: '#ff8080' }, // 0% 处的颜色
+            { offset: 1, color: '#ff808030' } // 100% 处的颜色
+          ]),
+          main: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+            { offset: 0, color: '#28abce' }, // 0% 处的颜色
+            { offset: 1, color: '#28abce30' } // 100% 处的颜色
+          ])
+        }
       }
     },
     mounted(){
@@ -264,7 +274,8 @@
         })
         let data = this.infoList.map(item => ({
           name: item.name,
-          time: item.time/20/3600
+          time: item.time/20/3600,
+          stats: item.stats
         }))
         data.sort((a, b) => b.time - a.time)
         data=data.slice(0,10)
@@ -314,14 +325,14 @@
               name: '时间（小时）',
               type: 'bar',
               barCategoryGap: '30%',
-              data: data.map((item)=>{return item.time}).reverse(),
-              color:new echarts.graphic.LinearGradient(0, 0, 1, 0, [{    // 右、下、左、上
-                        offset: 0, color: '#28abce'   // 0% 处的颜色
-                      }, {
-                        offset: 1, color: '#28abce30'   // 100% 处的颜色
-                      }
-                    ]
-                  )
+              data: data.map((item) => {
+                return {
+                  value: item.time,
+                  itemStyle: {
+                    color: item.stats === 'sc' ? this.echartsColor.sc : this.echartsColor.main
+                  }
+                };
+              }).reverse(),
           }]
         }
         onlineTimeChart.setOption(option,true)
@@ -334,7 +345,8 @@
         })
         let data = this.infoList.map(item => ({
           name: item.name,
-          mines: item.mines
+          mines: item.mines,
+          stats: item.stats
         }))
         data.sort((a, b) => b.mines - a.mines)
         data=data.slice(0,10)
@@ -384,14 +396,14 @@
             name: '挖掘数量',
             type: 'bar',
             barCategoryGap: '30%',
-            data: data.map((item)=>{return item.mines}).reverse(),
-            color:new echarts.graphic.LinearGradient(0, 0, 1, 0, [{    // 右、下、左、上
-                      offset: 0, color: '#28abce'   // 0% 处的颜色
-                    }, {
-                      offset: 1, color: '#28abce30'   // 100% 处的颜色
-                    }
-                  ]
-                )
+            data: data.map((item) => {
+                return {
+                  value: item.mines,
+                  itemStyle: {
+                    color: item.stats === 'sc' ? this.echartsColor.sc : this.echartsColor.main
+                  }
+                };
+              }).reverse(),
           }]
         }
         mineListChart.setOption(option,true)
@@ -404,7 +416,8 @@
         })
         let data = this.infoList.map(item => ({
           name: item.name,
-          kills: item.kills
+          kills: item.kills,
+          stats: item.stats
         }))
         data.sort((a, b) => b.kills - a.kills)
         data=data.slice(0,10)
@@ -454,14 +467,14 @@
             name: '击杀',
             type: 'bar',
             barCategoryGap: '30%',
-            data: data.map((item)=>{return item.kills}).reverse(),
-            color:new echarts.graphic.LinearGradient(0, 0, 1, 0, [{    // 右、下、左、上
-                      offset: 0, color: '#28abce'   // 0% 处的颜色
-                    }, {
-                      offset: 1, color: '#28abce30'   // 100% 处的颜色
-                    }
-                  ]
-                )
+            data: data.map((item) => {
+                return {
+                  value: item.kills,
+                  itemStyle: {
+                    color: item.stats === 'sc' ? this.echartsColor.sc : this.echartsColor.main
+                  }
+                };
+              }).reverse(),
           }]
         }
         killListChart.setOption(option,true)
@@ -474,7 +487,8 @@
         })
         let data = this.infoList.map(item => ({
           name: item.name,
-          death: item.death
+          death: item.death,
+          stats: item.stats
         }))
         data.sort((a, b) => b.death - a.death)
         data=data.slice(0,10)
@@ -524,14 +538,14 @@
             name: '死亡',
             type: 'bar',
             barCategoryGap: '30%',
-            data: data.map((item)=>{return item.death}).reverse(),
-            color:new echarts.graphic.LinearGradient(0, 0, 1, 0, [{    // 右、下、左、上
-                      offset: 0, color: '#28abce'   // 0% 处的颜色
-                    }, {
-                      offset: 1, color: '#28abce30'   // 100% 处的颜色
-                    }
-                  ]
-                )
+            data: data.map((item) => {
+                return {
+                  value: item.death,
+                  itemStyle: {
+                    color: item.stats === 'sc' ? this.echartsColor.sc : this.echartsColor.main
+                  }
+                };
+              }).reverse(),
           }]
         }
         deathListChart.setOption(option,true)
@@ -544,7 +558,8 @@
         })
         let data = this.infoList.map(item => ({
           name: item.name,
-          lengths: (item.walks+item.flys+item.swims+item.dives+item.crats+item.boats+item.horses+item.aviates)/100000
+          lengths: (item.walks+item.flys+item.swims+item.dives+item.crats+item.boats+item.horses+item.aviates)/100000,
+          stats: item.stats
         }))
         data.sort((a, b) => b.lengths - a.lengths)
         data=data.slice(0,10)
@@ -594,14 +609,14 @@
             name: '冒险距离（千米）',
             type: 'bar',
             barCategoryGap: '30%',
-            data: data.map((item)=>{return item.lengths}).reverse(),
-            color:new echarts.graphic.LinearGradient(0, 0, 1, 0, [{    // 右、下、左、上
-                      offset: 0, color: '#28abce'   // 0% 处的颜色
-                    }, {
-                      offset: 1, color: '#28abce30'   // 100% 处的颜色
-                    }
-                  ]
-                )
+            data: data.map((item) => {
+                return {
+                  value: item.lengths,
+                  itemStyle: {
+                    color: item.stats === 'sc' ? this.echartsColor.sc : this.echartsColor.main
+                  }
+                };
+              }).reverse(),
           }]
         }
         adventureListChart.setOption(option,true)

@@ -72,21 +72,33 @@ export default({
         // https://api.mcax.cn/rcon?server=服务器名&pwd=Orientation&c=give&c=Nerakolo&c=diamond&c=1
         onSubmit(){
             // console.log(this.command)
+            if(!this.command.server||!this.command.cmd||!this.command.cmdText){
+                this.$message({
+                    message: '输入完整指令',
+                    type: 'warning'
+                })
+                return false
+            }
             let cmd = this.command.cmdText
             cmd = cmd.replace(/\s/g, "&c=")
             let cmdTextGo
             if(['kick', 'give', 'kill', 'money'].includes(this.command.cmd)){
-                cmdTextGo=`https://api.mcax.cn/rcon?server=${this.command.server}&pwd=${this.command.pas}&c=${this.command.cmd}&c=${cmd}`
+                cmdTextGo=`https://api.mcax.cn/rcon?srv=${this.command.server}&pwd=${this.command.pas}&cmd=${this.command.cmd} ${cmd}`
             }else{
-                cmdTextGo=`https://api.mcax.cn/rcon?server=${this.command.server}&c=${this.command.cmd}&c=${cmd}`
+                cmdTextGo=`https://api.mcax.cn/rcon?srv=${this.command.server}&cmd=${this.command.cmd} ${cmd}`
             }
             // console.log(cmdTextGo)
             http.get(cmdTextGo)
             .then(res=>{
-                this.$message({
-                    message: res.data?res.data:'执行成功',
-                    type: 'success'
-                })
+                console.log(res.data)
+                if(res.status==200){
+                    this.$message({
+                        message: '操作成功',
+                        type: 'success'
+                    })
+                }
+            }).catch(err=>{
+
             })
         }
     }
