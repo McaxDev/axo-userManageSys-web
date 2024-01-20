@@ -5,9 +5,9 @@
                 <div>{{ !userName? '您还未登录':`欢迎！${userName}` }}</div>
             </div>
             <div>
-                <el-radio-group v-model="tabChose" size="mini">
+                <el-radio-group v-model="tabChose" size="mini" @input="getGameData">
                     <el-radio-button label="Java生存服"></el-radio-button>
-                    <el-radio-button label="互通服" disabled></el-radio-button>
+                    <el-radio-button label="互通服"></el-radio-button>
                 </el-radio-group>
             </div>
         </div>
@@ -107,22 +107,35 @@ export default({
         }
     },
     mounted(){
+        this.screen = window.innerWidth
         window.addEventListener('resize', () => {
             this.screen = window.innerWidth
         })
-        const query={
-            id:this.$store.state.userId,
-            server:this.tabChose==='Java生存服'?'sc':'main'
-        }
-        console.log(query)
         if(this.$store.state.userId){
+            this.getGameData()
+        }else{
+            this.$message({
+                message: '请登录后查看您的游戏数据',
+                type: 'warning'
+            })
+        }
+        
+    },
+    methods:{
+        getGameData(){
+            this.loading=true
+            const query={
+                id:this.$store.state.userId,
+                server:this.tabChose==='Java生存服'?'sc':'main'
+            }
+            // console.log(query)
             http.post('/getGameData',query)
             .then(res=>{
-                console.log(res.data.data)
+                // console.log(res.data.data)
                 if(res.data.data){
                     let hours = Math.floor(res.data.data.time / 20 / 3600 )
                     let minutes = Math.floor((res.data.data.time / 20 % 3600) / 60 )
-                    console.log(hours,minutes)
+                    // console.log(hours,minutes)
                     this.aviates=res.data.data.aviates*1/100000
                     this.boats=res.data.data.boats*1/100000
                     this.crats=res.data.data.crats
@@ -139,17 +152,9 @@ export default({
                     this.walks=res.data.data.walks*1/100000
                     this.loading=false
                 }
-            })
-        }else{
-            this.$message({
-                message: '请登录后查看您的游戏数据',
-                type: 'warning'
+                this.loading=false
             })
         }
-        
-    },
-    methods:{
-
     },
     computed:{
       userName() {
@@ -169,5 +174,9 @@ export default({
 </script>
 
 <style>
-
+.gameData{
+    .drawer{
+        min-width: 360px;
+    }
+}
 </style>
