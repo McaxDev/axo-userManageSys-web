@@ -20,9 +20,9 @@ export default({
     data(){
         return{
             links:[
-                {src:require('../../assets/img/links/wwwmcax.png'),content:'Axolotland官网',tip:'Axolotland官方网站',url:'https://www.mcax.cn/'},
-                {src:require('../../assets/img/links/axowiki.png'),content:'Axo-wiki百科',tip:'Axolotland维基百科',url:'https://wiki.mcax.cn/Home'},
-                {src:require('../../assets/img/links/axobbs.png'),content:'Axo-bbs论坛',tip:'Axolotland官方论坛',url:'https://bbs.mcax.cn/'},
+                {src:require('../../assets/img/links/wwwmcax.png'),content:'Axolotland官网',tip:'Axolotland官方网站',url:this.$store.state.webLinks.www},
+                {src:require('../../assets/img/links/axowiki.png'),content:'Axo-wiki百科',tip:'Axolotland维基百科',url:this.$store.state.webLinks.wiki},
+                {src:require('../../assets/img/links/axobbs.png'),content:'Axo-bbs论坛',tip:'Axolotland官方论坛',url:this.$store.state.webLinks.bbs},
                 {src:require('../../assets/img/links/bilibili.png'),content:'bilibili',tip:'哔哩哔哩',url:'https://www.bilibili.com/'},
                 {src:require('../../assets/img/links/minecraft.png'),content:'MINECRAFT',tip:'我的世界官网',url:'https://www.minecraft.net/zh-hans'},
                 {src:require('../../assets/img/links/klpbbs.png'),content:'苦力怕论坛',tip:'苦力怕论坛',url:'https://klpbbs.com/'},

@@ -183,69 +183,69 @@
                 },
                 data: data.java.sc
               },
-              {
-                name: 'java模组',
-                type: 'line',
-                areaStyle: {},
-                emphasis: {
-                  focus: 'series'
-                },
-                itemStyle:{
-                  color:'#ff9999'
-                },
-                areaStyle:{
-                    color:new echarts.graphic.LinearGradient(0, 0, 0, 1, [{    // 右、下、左、上
-                        offset: 0, color: '#ff9999'   // 0% 处的颜色
-                      }, {
-                        offset: 1, color: '#ff999930'   // 100% 处的颜色
-                      }
-                    ]
-                  )
-                },
-                data: data.java.mod
-              },
-              {
-                name: 'java互通/小游戏',
-                type: 'line',
-                areaStyle: {},
-                emphasis: {
-                  focus: 'series'
-                },
-                itemStyle:{
-                  color:'#ffb3b3'
-                },
-                areaStyle:{
-                    color:new echarts.graphic.LinearGradient(0, 0, 0, 1, [{    // 右、下、左、上
-                        offset: 0, color: '#ffb3b3'   // 0% 处的颜色
-                      }, {
-                        offset: 1, color: '#ffb3b330'   // 100% 处的颜色
-                      }
-                    ]
-                  )
-                },
-                data: data.java.geyser
-              },
-              {
-                name: '泰拉瑞亚',
-                type: 'line',
-                areaStyle: {},
-                emphasis: {
-                  focus: 'series'
-                },
-                itemStyle:{
-                  color:'#41a863'
-                },
-                areaStyle:{
-                    color:new echarts.graphic.LinearGradient(0, 0, 0, 1, [{    // 右、下、左、上
-                        offset: 0, color: '#41a863'   // 0% 处的颜色
-                      }, {
-                        offset: 1, color: '#41a86330'   // 100% 处的颜色
-                      }
-                    ]
-                  )
-                },
-                data: data.tela.main
-              }
+              // {
+              //   name: 'java模组',
+              //   type: 'line',
+              //   areaStyle: {},
+              //   emphasis: {
+              //     focus: 'series'
+              //   },
+              //   itemStyle:{
+              //     color:'#ff9999'
+              //   },
+              //   areaStyle:{
+              //       color:new echarts.graphic.LinearGradient(0, 0, 0, 1, [{    // 右、下、左、上
+              //           offset: 0, color: '#ff9999'   // 0% 处的颜色
+              //         }, {
+              //           offset: 1, color: '#ff999930'   // 100% 处的颜色
+              //         }
+              //       ]
+              //     )
+              //   },
+              //   data: data.java.mod
+              // },
+              // {
+              //   name: 'java互通/小游戏',
+              //   type: 'line',
+              //   areaStyle: {},
+              //   emphasis: {
+              //     focus: 'series'
+              //   },
+              //   itemStyle:{
+              //     color:'#ffb3b3'
+              //   },
+              //   areaStyle:{
+              //       color:new echarts.graphic.LinearGradient(0, 0, 0, 1, [{    // 右、下、左、上
+              //           offset: 0, color: '#ffb3b3'   // 0% 处的颜色
+              //         }, {
+              //           offset: 1, color: '#ffb3b330'   // 100% 处的颜色
+              //         }
+              //       ]
+              //     )
+              //   },
+              //   data: data.java.geyser
+              // },
+              // {
+              //   name: '泰拉瑞亚',
+              //   type: 'line',
+              //   areaStyle: {},
+              //   emphasis: {
+              //     focus: 'series'
+              //   },
+              //   itemStyle:{
+              //     color:'#41a863'
+              //   },
+              //   areaStyle:{
+              //       color:new echarts.graphic.LinearGradient(0, 0, 0, 1, [{    // 右、下、左、上
+              //           offset: 0, color: '#41a863'   // 0% 处的颜色
+              //         }, {
+              //           offset: 1, color: '#41a86330'   // 100% 处的颜色
+              //         }
+              //       ]
+              //     )
+              //   },
+              //   data: data.tela.main
+              // }
             ]
           }
           onlineInfoChart.setOption(option,true)

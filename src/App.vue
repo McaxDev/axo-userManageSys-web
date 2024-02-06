@@ -95,14 +95,14 @@
             <el-menu-item index="/gameData">游戏数据</el-menu-item>
           </el-submenu>
 
-          <el-submenu index="3" v-if="isAdmin===1">
+          <el-submenu index="3">
             <template slot="title">
               <i class="el-icon-s-tools"></i>
               <span slot="title">工作台</span>
             </template>
-            <el-menu-item index="/userManage">账号管理</el-menu-item>
-            <el-menu-item index="/quickCommand">快捷指令</el-menu-item>
-            <!-- <el-menu-item index="/handleLogs">操作日志</el-menu-item> -->
+            <el-menu-item index="/userManage" v-if="isAdmin===1">账号管理</el-menu-item>
+            <el-menu-item index="/quickCommand" v-if="isAdmin===1">快捷指令</el-menu-item>
+            <el-menu-item index="/handleLogs">玩家日志</el-menu-item>
           </el-submenu>
 
           <el-menu-item index="/about">
@@ -149,6 +149,12 @@
       window.addEventListener('resize', this.screenChange)
       // this.$router.push('/')
       this.logTest()
+      http.post('/getWebLinks')
+        .then(res => {
+          this.$store.commit('setWebLinks', (JSON.parse(res.data))[0])
+          // console.log((JSON.parse(res.data))[0])
+        })
+      console.log(this.$store.state.userName)
     },
     methods: {
       logTest(){
@@ -207,9 +213,6 @@
                   message: res.data.msg,
                   type: 'success'
                 })
-              })
-              .catch(err=>{
-                this.$message.error(err)
               })
               console.log('注册',this.valueform.name)
             }

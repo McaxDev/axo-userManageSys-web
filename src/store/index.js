@@ -9,7 +9,8 @@ export default new Vuex.Store({
     isAdmin:false,
     userName:'',
     userId:null,
-    gameName:''
+    gameName:'',
+    webLinks:[]
   },
   getters: {
   },
@@ -28,6 +29,9 @@ export default new Vuex.Store({
     },
     setGameName(state, status){
       state.gameName = status
+    },
+    setWebLinks(state, status){
+      state.webLinks = status
     }
   },
   actions: {

@@ -10,7 +10,7 @@
 export default({
     data(){
         return{
-            version:'v0.6.1-24.1.21-open-α'
+            version:'v0.7.1-24.2.06-open-β'
         }
     },
     mounted(){
