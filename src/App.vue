@@ -70,7 +70,7 @@
     </div>
     <div class="view">
       <div style="border-right: 1px solid #e6e6e6;">
-        <el-menu default-active="/" class="el-menu text-start" :collapse="isCollapse" :router="true" style="min-height: calc(100vh - 56px);border: none;">
+        <el-menu default-active="/" class="el-menu text-start" :collapse="isCollapse" @select="handleSelect" :router="true" style="min-height: calc(100vh - 56px);border: none;">
           
           <el-submenu index="1">
             <template slot="title">
@@ -110,6 +110,11 @@
             <span slot="title">关于本站</span>
           </el-menu-item>
 
+          <el-menu-item index="weekReport">
+            <i class="el-icon-s-order"></i>
+            <span slot="title">周目总结</span>
+          </el-menu-item>
+
         </el-menu>
 
       </div>
@@ -145,6 +150,15 @@
       }
     },
     mounted(){
+
+      console.log(`
+ ______     __  __     ______     __         ______     ______   __         ______     __   __     _____    
+/\\  __ \\   /\\_\\_\\_\\   /\\  __ \\   /\\ \\       /\\  __ \\   /\\__  _\\ /\\ \\       /\\  __ \\   /\\ "-.\\ \\   /\\  __-.  
+\\ \\  __ \\  \\/_/_\\/_/  \\ \\ \\/\\ \\  \\ \\ \\____  \\ \\ \\/\\ \\  \\/_/\\ \\/ \\ \\ \\____  \\ \\  __ \\  \\ \\ \\-.  \\  \\ \\ \\/\\ \\ 
+ \\ \\_\\ \\_\\   /\\_/\\_/\\  \\ \\_____\\  \\ \\_____\\  \\ \\_____\\    \\ \\_\\  \\ \\_____\\  \\ \\_\\ \\_\\  \\ \\_\\\"\\_\\  \\ \\____- 
+  \\/_/\\/_/   \\/_/\\/_/   \\/_____/   \\/_____/   \\/_____/     \\/_/   \\/_____/   \\/_/\\/_/   \\/_/ \\/_/   \\/____/ 
+`)
+
       this.screenChange()
       window.addEventListener('resize', this.screenChange)
       // this.$router.push('/')
@@ -234,6 +248,13 @@
           message: `登出账号`,
           type: 'warning'
         })
+      },
+      handleSelect(key, keyPath) {
+        switch(key){
+          case('weekReport'):
+            window.open('https://www.baidu.com/', '_blank')
+            break
+        }
       }
 
     },
