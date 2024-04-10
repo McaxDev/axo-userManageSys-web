@@ -104,11 +104,11 @@ export default({
                 res.data.data.forEach((item)=>{
                     var head
                     const data={
-                        userName:item.userName
+                        userName:item.user_name
                     }
                     http.post('/getUserHead',data)
                     .then(res=>{
-                        head=JSON.parse(res.data.data)==null?'':`${http.defaults.baseURL}/imgs/${JSON.parse(res.data.data.head)[0]}`
+                        head=JSON.parse(res.data.data.head)==null?'':`${http.defaults.baseURL}/imgs/${JSON.parse(res.data.data.head)[0]}`
                         this.msgs.push({uuid:item.uuid,gameName:item.game_name,userName:item.user_name,date:item.date,content:item.content,head,list:item.list})
                         this.msgs.sort((a, b) => b.list - a.list)
                         console.log(this.msgs)
