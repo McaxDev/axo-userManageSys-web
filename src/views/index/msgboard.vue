@@ -108,9 +108,10 @@ export default({
                     }
                     http.post('/getUserHead',data)
                     .then(res=>{
-                        head=JSON.parse(res.data.data.head)==null?'':`${http.defaults.baseURL}/imgs/${JSON.parse(res.data.data.head)[0]}`
-                        this.msgs.push({uuid:item.uuid,gameName:item.gameName,userName:item.userName,date:item.date,content:item.content,head,list:item.list})
+                        head=JSON.parse(res.data.data)==null?'':`${http.defaults.baseURL}/imgs/${JSON.parse(res.data.data.head)[0]}`
+                        this.msgs.push({uuid:item.uuid,gameName:item.game_name,userName:item.user_name,date:item.date,content:item.content,head,list:item.list})
                         this.msgs.sort((a, b) => b.list - a.list)
+                        console.log(this.msgs)
                     })
                     .catch(err=>{
                         console.log(err)

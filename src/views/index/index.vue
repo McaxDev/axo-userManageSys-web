@@ -82,12 +82,12 @@
           res.data.results.forEach(item => {
             this.cards[0].loading=false
             // console.log(item)
-            this.onlineInfoData.be.main.push( [item.time, parseInt(item['be-main'])] )
+            this.onlineInfoData.be.main.push( [item.time, parseInt(item['be_main'])] )
 
-            this.onlineInfoData.java.sc.push( [item.time, parseInt(item['je-sc'])] )
-            this.onlineInfoData.java.mod.push( [item.time, parseInt(item['je-mod'])] )
-            this.onlineInfoData.java.geyser.push( [item.time, parseInt(item['je-geyser'])] )
-            this.onlineInfoData.tela.main.push( [item.time, parseInt(item['tela-main'])] )
+            this.onlineInfoData.java.sc.push( [item.time, parseInt(item['je_sc'])] )
+            this.onlineInfoData.java.mod.push( [item.time, parseInt(item['je_mod'])] )
+            this.onlineInfoData.java.geyser.push( [item.time, parseInt(item['je_geyser'])] )
+            this.onlineInfoData.tela.main.push( [item.time, parseInt(item['tela_main'])] )
 
             // console.log(this.onlineInfoData)
             data=this.onlineInfoData
@@ -327,7 +327,7 @@
               barCategoryGap: '30%',
               data: data.map((item) => {
                 return {
-                  value: item.time,
+                  value: item.time.toFixed(2),
                   itemStyle: {
                     color: item.stats === 'sc' ? this.echartsColor.sc : this.echartsColor.main
                   }
@@ -611,7 +611,7 @@
             barCategoryGap: '30%',
             data: data.map((item) => {
                 return {
-                  value: item.lengths,
+                  value: item.lengths.toFixed(2),
                   itemStyle: {
                     color: item.stats === 'sc' ? this.echartsColor.sc : this.echartsColor.main
                   }
